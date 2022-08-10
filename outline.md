@@ -5,21 +5,25 @@ Introduction
 - Motivation
 - Summary of New Contributions
 
-Literature Review (TODO: riley)
+Caching and prefetching (TODO: riley)
 
 - Define caching
 - Talking about prefetching
-- Previous uses of entropy in caching
-- Predictability vs cacheability
+  - stride prefetching
+- Literature Review
+
+Conditional Entropy
+
 - Explanation of entropy
   - Conditional entropy
-- Studies on stride prefetching
+- Previous uses of entropy in caching
+- Predictability vs cacheability
+- Theoretical reasons to care about entropy
+  - Strides (formal defn)
+- What we conditioned on and why
 
 Methodology (TODO: ilana)
 
-- Theoretical reasons to care about entropy
-  - What we conditioned on and why
-  - Strides (formal defn)
 - Data (Trace Sources)
 - Cache simulator (program details)
 
