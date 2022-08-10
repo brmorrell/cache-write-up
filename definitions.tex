@@ -2,46 +2,50 @@
 
 \subsection{Entropy and Conditional Entropy}
 
-% TODO
+% TODO: something abt the entropy of a trace as a stochastic process
 
-\subsection{Last-$n$ Entropy}
+\subsection{$n$-gram Entropy}
 
-The last-$n$ entropy of a trace quantifies the ability of a prefetcher to
-predict the trace via analyzing \textit{specific} sequences of pages in the
-trace. \textit{Temporal prefetching} works by 
-% TODO: temporal prefetching
+\textit{Temporal prefetching} remembers high-frequency sequences of
+consecuitive accesses and prefetches subsequent items when prefixes of
+sequences occur. The \textit{$n$-gram entropy} of a trace provides a natural
+quantification of the temporal prefetchability of the trace.
+
+% TODO: cite about temporal prefetching?
 
 \begin{definition}[$n$-gram] Let $n$ be a positive integer. Then an $n$-gram is
 an $n$-length sequence of (not necessarily unique) pages. We use $w_t^n$ to
 refer to the the set of all $n$-grams which appear in the trace $t$.
 \end{definition}
 
-For some $n$-gram $b\in w^n_t$, let $p_b: T\times\mathbb{N}\rightarrow\{0,1\}$
-be the predicate which asks whether the previous $n$ accesses are precisely $b$,
-i.e. $p(t, i) = 1$ if $t[i-2..i] = b$, and $0$ otherwise.
+Temporal prefetching essentially works by memorization of common $n$-grams, so
+they are a natural starting point for examining the temporal prefetcability of
+a trace. In particular, we are interested in the entropy associated with the
+subsequent page requested after any particular $n$-gram; a lower entropy
+implies greater predictability for that specific $n$-gram.
 
-Let $T$ be the universe of all traces.
+\begin{definition} Let $b$ be an $n$-gram and $t$ a trace. Then $H(t \mid b)$
+  refers to the entropy of $t$ conditioned on seeing $b$, i.e. the entropy of
+  the subset of requests which occur immediately after requests to the $n$
+  pages in $b$. Further, we use $P_t(b)$ for the experimentally observed
+probability of seeing $b$ in any particular $n$-length window of $t$.
+\end{definition}
 
-% TODO: something abt the entropy of a trace as a stochastic process
 
-Defn: Let $p: T\times\mathbb{N} \rightarrow \{0,1\}$ be a predicate defined on
-specific accesses of traces. Let $t$ be a trace. The \textit{frequency of p in t},
-$|p|_t$, is the number of times p is true in t. The \textit{observed probability of p
-in t} is $P(p) = |p|_t / |t|$.
 
 % TODO: representing conditions that could occur a smaller numebr of times than
 % |t|, i.e. windows. (Maybe just define stride entropy?)
 
 % TODO: is there a probability notation for this?
 
-The \textit{p-conditioned entropy of t}, $H(t|p)$, is the conditional entropy of the
-trace under that condition.
+\begin{definition}[$n$-gram entropy] For some positive integer n, the
+  \textit{$n$-gram entropy} of a trace $t$ is
 
-Defn: For some positive integer n, the \textit{last-n entropy} of a trace t is
+\begin{equation}
+  H_{w_n}(t) = \sum_{b \in w^n_t} P_t(b) \cdot H(t \mid b).
+\end{equation}
 
-$$
-\sum_{b \in w^n_t} P(p_b) \cdot H(t | p_b)
-$$
+\end{definition}
 
 % TODO: do this for strides, not just last-n. One idea is to define $s_t$ or
 % similar as the sequence of strides (consecutive differences) in $t$, and then
