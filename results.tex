@@ -50,6 +50,6 @@ We also measured the entropy of the strides conditioned on knowing the last $N$ 
     \label{fig:cond2}
 \end{figure}
 
-These results indicate that it could be worthwhile to give a prefetcher the resources to keep track of strides conditioned on the last 2 that have been seen, at least in longer traces.  The predictability of the strides based on only the previous stride can also provides large benefits to any prefetcher.
+These results indicate that it could be worthwhile to give a prefetcher the resources to keep track of strides conditioned on the last 2 that have been seen, at least in longer traces.  The predictability of the strides based on only the previous stride can also provides large benefits to any prefetcher.  Caches without prefetchers likely cannot take advantage of stride patterns without large amounts of resources, so these entropy values do not mean much for the cachability of a trace.
 
 \end{document}
