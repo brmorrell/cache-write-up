@@ -1,24 +1,6 @@
-\documentclass{article}
-\usepackage[utf8]{inputenc}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{fullpage}
-\usepackage{titlesec}
-\usepackage{multirow}
-\titleformat{\section}{\bfseries}{\thesection}{1em}{}
-\titleformat{\subsection}{}{\thesection}{1em}{}
-\usepackage{tikz}
-\usetikzlibrary{positioning}
-\usepackage{listings}
-\usepackage{color}
-\usepackage{lineno}
-\renewcommand\linenumberfont{\normalfont\small\sffamily}
+\section{Results}
 
-
-\begin{document}
-
-\section*{Results}
+%TODO: use the definitions from definitions.tex
 
 \paragraph{}
 We investigated the relationship between entropy and cache traces, attempting to relate it to the cachability or prefetchability of a given trace.  What we found across several real-world traces is that distinct items are repeated very few times, making them poor predictors of what would be accessed next.  However, the differences between consecutive accesses (strides) are much more predictable.  While this predictability doesn't indicate that a trace will perform better in a cache on its own, it does indicate that a cache running the trace would greatly benefit from a prefetcher that can use stride data to predict the next access.
@@ -50,6 +32,6 @@ We also measured the entropy of the strides conditioned on knowing the last $N$ 
     \label{fig:cond2}
 \end{figure}
 
-These results indicate that it could be worthwhile to give a prefetcher the resources to keep track of strides conditioned on the last 2 that have been seen, at least in longer traces.  The predictability of the strides based on only the previous stride can also provides large benefits to any prefetcher.  Caches without prefetchers likely cannot take advantage of stride patterns without large amounts of resources, so these entropy values do not mean much for the cachability of a trace.
+These results indicate that it could be worthwhile to give a prefetcher the resources to keep track of strides conditioned on the last 2 that have been seen, at least in longer traces.  The predictability of the strides based on only the previous stride can also provides large benefits to any prefetcher.  A trace with lower stride entropy should have better performance with a prefetcher.
 
-\end{document}
+We did not have conclusive results when calculating entropy on items as our data did not repeat items enough to provide a reasonable sample size.
