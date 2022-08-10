@@ -1,0 +1,48 @@
+\section{Entropy and Trace Predictability}
+
+\subsection{Entropy and Conditional Entropy}
+
+% TODO
+
+\subsection{Last-$n$ Entropy}
+
+The last-$n$ entropy of a trace quantifies the ability of a prefetcher to
+predict the trace via analyzing \textit{specific} sequences of pages in the
+trace. \textit{Temporal prefetching} works by 
+% TODO: temporal prefetching
+
+\begin{definition}[$n$-gram] Let $n$ be a positive integer. Then an $n$-gram is
+an $n$-length sequence of (not necessarily unique) pages. We use $w_t^n$ to
+refer to the the set of all $n$-grams which appear in the trace $t$.
+\end{definition}
+
+For some $n$-gram $b\in w^n_t$, let $p_b: T\times\mathbb{N}\rightarrow\{0,1\}$
+be the predicate which asks whether the previous $n$ accesses are precisely $b$,
+i.e. $p(t, i) = 1$ if $t[i-2..i] = b$, and $0$ otherwise.
+
+Let $T$ be the universe of all traces.
+
+% TODO: something abt the entropy of a trace as a stochastic process
+
+Defn: Let $p: T\times\mathbb{N} \rightarrow \{0,1\}$ be a predicate defined on
+specific accesses of traces. Let $t$ be a trace. The \textit{frequency of p in t},
+$|p|_t$, is the number of times p is true in t. The \textit{observed probability of p
+in t} is $P(p) = |p|_t / |t|$.
+
+% TODO: representing conditions that could occur a smaller numebr of times than
+% |t|, i.e. windows. (Maybe just define stride entropy?)
+
+% TODO: is there a probability notation for this?
+
+The \textit{p-conditioned entropy of t}, $H(t|p)$, is the conditional entropy of the
+trace under that condition.
+
+Defn: For some positive integer n, the \textit{last-n entropy} of a trace t is
+
+$$
+\sum_{b \in w^n_t} P(p_b) \cdot H(t | p_b)
+$$
+
+% TODO: do this for strides, not just last-n. One idea is to define $s_t$ or
+% similar as the sequence of strides (consecutive differences) in $t$, and then
+% define terms similarly to above.
