@@ -2,7 +2,7 @@ Abstract
 
 Introduction
 
-- Motivation
+- Motivation (TODO: ilana)
 - Summary of New Contributions
 
 Caching and prefetching (TODO: riley)
@@ -12,20 +12,21 @@ Caching and prefetching (TODO: riley)
   - stride prefetching
 - Literature Review
 
-Conditional Entropy
+Conditional Entropy (TODO: ilana)
 
-- Explanation of entropy
+- Explanation of entropy (TODO: ilana)
   - Conditional entropy
 - Previous uses of entropy in caching
 - Predictability vs cacheability
+
+Some theory (TODO: Riley)
 - Theoretical reasons to care about entropy
   - Strides (formal defn)
 - What we conditioned on and why
 
-Methodology (TODO: ilana)
+Data Sourcees (TODO: ilana)
 
-- Data (Trace Sources)
-- Cache simulator (program details)
+- Trace Sources
 
 Results (TODO: bryant)
 
