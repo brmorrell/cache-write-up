@@ -7,30 +7,28 @@
 \subsection{$n$-gram Entropy}
 
 \textit{Temporal prefetching} remembers high-frequency sequences of
-consecuitive accesses and prefetches subsequent items when prefixes of
+consecutive accesses and prefetches subsequent items when prefixes of
 sequences occur. The \textit{$n$-gram entropy} of a trace provides a natural
 quantification of the temporal prefetchability of the trace.
 
 % TODO: cite about temporal prefetching?
 
-\begin{definition}[$n$-gram] Let $n$ be a positive integer. Then an $n$-gram is
-an $n$-length sequence of (not necessarily unique) pages. We use $w_t^n$ to
-refer to the the set of all $n$-grams which appear in the trace $t$.
-\end{definition}
+\begin{definition}[$n$-gram] Let $n$ be a positive integer. Then an
+  \textit{$n$-gram} is an $n$-length sequence of (not necessarily unique)
+  pages. We use $w_\sigma^n$ to refer to the the set of all $n$-grams which
+  appear in the trace $\sigma$. \end{definition}
 
 Temporal prefetching essentially works by memorization of common $n$-grams, so
-they are a natural starting point for examining the temporal prefetcability of
+they are a natural starting point for examining the temporal prefetchability of
 a trace. In particular, we are interested in the entropy associated with the
 subsequent page requested after any particular $n$-gram; a lower entropy
 implies greater predictability for that specific $n$-gram.
 
-\begin{definition} Let $b$ be an $n$-gram and $t$ a trace. Then $H(t \mid b)$
-  refers to the entropy of $t$ conditioned on seeing $b$, i.e. the entropy of
-  the subset of requests which occur immediately after requests to the $n$
-  pages in $b$. Further, we use $P_t(b)$ for the experimentally observed
-probability of seeing $b$ in any particular $n$-length window of $t$.
-\end{definition}
-
+Let $g$ be an $n$-gram and $\sigma$ a trace. Then $H(\sigma \mid g)$ refers to
+the entropy of $\sigma$ conditioned on seeing $g$, i.e. the entropy of requests
+which occur when the previous $n$ accesses are precisely the sequence $g$.
+Further, we use $P_\sigma(g)$ for the experimentally observed probability of
+seeing $b$ in any particular $n$-length window of $\sigma$. 
 
 
 % TODO: representing conditions that could occur a smaller numebr of times than
@@ -39,13 +37,52 @@ probability of seeing $b$ in any particular $n$-length window of $t$.
 % TODO: is there a probability notation for this?
 
 \begin{definition}[$n$-gram entropy] For some positive integer n, the
-  \textit{$n$-gram entropy} of a trace $t$ is
+  \textit{$n$-gram entropy} of a trace $\sigma$ is
 
-\begin{equation}
-  H_{w_n}(t) = \sum_{b \in w^n_t} P_t(b) \cdot H(t \mid b).
-\end{equation}
+\begin{equation*}
+  H_{w^n}(\sigma) = \sum_{g \in w^n_\sigma} P_\sigma(g) \cdot H(\sigma \mid g).
+\end{equation*}
 
 \end{definition}
+
+\subsection{Stride Entropy}
+
+\textit{Stride prefetching} memorizes offsets between successive accesses,
+rather than the accesses themselves. For example, if a common access pattern in
+$\sigma$ is $a, a+s_1, a+s_1+s_2$ for a variety of $a$, a stride prefetcher
+may prefetch $\sigma_i+s_1+s_2$ after it sees the specific sequence $\sigma_i,
+\sigma_i + s_1$.
+
+
+\begin{definition}[Stride; Stride sequence] Let $\sigma =
+  \sigma_1\dots\sigma_N$ be a trace. If $i\in \{1, \dots, n-1\}$, then the
+  \textit{stride of $\sigma_i$} is $s_i = \sigma_{i+1} - \sigma_i$, i.e., the
+  offset between the $i$th access and the $i+1$st access in $\sigma$. The
+  \textit{stride sequence of $\sigma$} is the sequence of integers $s_\sigma =
+  s_1\dots s_{N-1}$. In general, a \textit{stride sequence} is a sequence of
+  integers $s = s_1\dots s_n$. We use $s_\sigma^n$ to refer to the set of all
+  $n$-length stride sequences which appear in $\sigma$. \end{definition}
+
+For example, the access pattern $a, a+2, a+5$, for any $a$, has the stride
+sequence $(2, 5)$. As before, we want to measure the effectiveness of stride
+prefetching via measuring the extent to which stride sequences allow predicting
+the next access. By operating on the stride sequence of a trace, we can
+essentially reduce the problem back to $n$-gram entropy.
+
+Let $s$ be a stride sequence of length $n$ and $\sigma$ a trace. Then
+$H(s_\sigma | s)$ refers to the entropy of the stride sequence conditioned on
+seeing $s$, i.e., the entropy of strides which occur after the stride sequence
+$s$. Also as before, we use $P_\sigma(s)$ for the experimentally observed
+probability of seeing $s$ in any particular $n$-length window of $\sigma$.
+
+\begin{definition}[$n$-stride entropy] For some positive integer $n$, the
+  \textit{$n$-stride entropy} of a trace $\sigma$ is
+  \begin{equation*}
+    H_{s^n}(\sigma) = \sum_{s\in s^n_\sigma} P_\sigma(s)\cdot H(s_\sigma\mid s).
+  \end{equation*}
+\end{definition}
+
+
 
 % TODO: do this for strides, not just last-n. One idea is to define $s_t$ or
 % similar as the sequence of strides (consecutive differences) in $t$, and then

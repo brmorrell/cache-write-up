@@ -10,7 +10,7 @@ Caching and prefetching (TODO: riley)
 - Define caching
 - Talking about prefetching
   - stride prefetching
-- Literature Review
+- Basic Literature Review
 
 Conditional Entropy (TODO: ilana)
 
